@@ -26,7 +26,17 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          submodules: recursive
+          submodules: false  # No inicializar submodulos autom�ticamente
+          fetch-depth: 0
+
+      #  NUEVO: Clonar el core manualmente
+      - name: Clone deltachat-core-rust
+        run: |
+          mkdir -p jni
+          cd jni
+          rm -rf nexuschat-core-rust
+          git clone --depth 1 https://github.com/deltachat/deltachat-core-rust nexuschat-core-rust
+          ls -la nexuschat-core-rust/
 
       - uses: actions/setup-java@v5
         with:
@@ -52,14 +62,12 @@ jobs:
         with:
           ndk-version: r27
 
-      # 🔧 CORREGIDO: Setup Rust sin actions-rs (más confiable)
       - name: Setup Rust
         run: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
           source "$HOME/.cargo/env"
 
-      # 🔧 CORREGIDO: Añadir targets de Android uno por uno
       - name: Add Android targets
         run: |
           rustup target add aarch64-linux-android
@@ -67,7 +75,6 @@ jobs:
           rustup target add i686-linux-android
           rustup target add x86_64-linux-android
 
-      # 🔧 NUEVO: Instalar cargo-ndk
       - name: Install cargo-ndk
         run: cargo install cargo-ndk
 
@@ -75,9 +82,12 @@ jobs:
         with:
           workspaces: jni/nexuschat-core-rust
 
-      - name: Get nexuschat-core-rust submodule hash
+      - name: Get core hash
         id: core-hash
-        run: echo "hash=$(git rev-parse HEAD:jni/nexuschat-core-rust)" >> $GITHUB_OUTPUT
+        run: |
+          cd jni/nexuschat-core-rust
+          echo "hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          cd -
 
       - name: Restore compiled core
         id: core-cache
@@ -88,24 +98,26 @@ jobs:
             libs/arm64-v8a
           key: core-arm64-v8a-${{ steps.core-hash.outputs.hash }}-${{ hashFiles('jni/Android.mk', 'jni/Application.mk', 'jni/nc_wrapper.c', 'scripts/ndk-make.sh') }}-ndk-r27
 
-      # 🔧 CORREGIDO: Dar permisos a los scripts antes de ejecutarlos
       - name: Compile core
         if: steps.core-cache.outputs.cache-hit != 'true'
         env:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
-          # Dar permisos de ejecución a los scripts
+          # Verificar que existe el directorio del core
+          if [ ! -d "jni/nexuschat-core-rust" ]; then
+            echo "ERROR: jni/nexuschat-core-rust no existe"
+            ls -la jni/
+            exit 1
+          fi
+          
           chmod +x scripts/install-toolchains.sh
           chmod +x scripts/ndk-make.sh
           
-          # Añadir NDK al PATH
           export PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/"
           
-          # Ejecutar scripts con bash (por si el shebang falla)
           bash scripts/install-toolchains.sh
           bash scripts/ndk-make.sh arm64-v8a
 
-      # 🔧 CORREGIDO: Dar permisos a gradlew
       - name: Build APK
         run: |
           chmod +x gradlew
