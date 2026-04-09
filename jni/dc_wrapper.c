@@ -4,7 +4,7 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nexuschat-core-rust/nexuschat-ffi/nexuschat.h"
+#include "nexuschat-core-rust/nexuschat-ffi/deltachat.h"
 
 
 static nc_msg_t* get_nc_msg(JNIEnv *env, jobject obj);
