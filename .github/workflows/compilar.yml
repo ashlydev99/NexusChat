@@ -1,6 +1,19 @@
 name: Upload Preview APK
 
-on: pull_request
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      abi_filter:
+        description: 'ABI Filter'
+        required: false
+        default: 'arm64-v8a'
+        type: choice
+        options:
+          - arm64-v8a
+          - armeabi-v7a
+          - x86
+          - x86_64
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -64,7 +77,7 @@ jobs:
           scripts/install-toolchains.sh && scripts/ndk-make.sh arm64-v8a
 
       - name: Build APK
-        run: ./gradlew --no-daemon -PABI_FILTER=arm64-v8a assembleGplayDebug
+        run: ./gradlew --no-daemon -PABI_FILTER=${{ github.event.inputs.abi_filter || 'arm64-v8a' }} assembleGplayDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
