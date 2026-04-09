@@ -53,12 +53,12 @@ jobs:
           ndk-version: r27
 
       # 🔧 NUEVO: Instalar Rust (necesario para compilar el core)
-      - name: Setup Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          target: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
-          override: true
+     - name: Setup Rust
+  uses: actions-rs/toolchain@v1
+  with:
+    toolchain: stable
+    target: aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+    override: true
 
       # 🔧 NUEVO: Instalar cargo-ndk
       - name: Install cargo-ndk
