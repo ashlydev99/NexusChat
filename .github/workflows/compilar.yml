@@ -55,9 +55,9 @@ jobs:
         with:
           workspaces: jni/nexuschat-core-rust
 
-      - name: Get deltachat-core-rust submodule hash
+      - name: Get nexuschat-core-rust submodule hash
         id: core-hash
-        run: echo "hash=$(git rev-parse HEAD:jni/deltachat-core-rust)" >> $GITHUB_OUTPUT
+        run: echo "hash=$(git rev-parse HEAD:jni/nexuschat-core-rust)" >> $GITHUB_OUTPUT
 
       - name: Restore compiled core
         id: core-cache
@@ -66,7 +66,7 @@ jobs:
           path: |
             jni/arm64-v8a
             libs/arm64-v8a
-          key: core-arm64-v8a-${{ steps.core-hash.outputs.hash }}-${{ hashFiles('jni/Android.mk', 'jni/Application.mk', 'jni/dc_wrapper.c', 'scripts/ndk-make.sh') }}-ndk-r27
+          key: core-arm64-v8a-${{ steps.core-hash.outputs.hash }}-${{ hashFiles('jni/Android.mk', 'jni/Application.mk', 'jni/nc_wrapper.c', 'scripts/ndk-make.sh') }}-ndk-r27
 
       - name: Compile core
         if: steps.core-cache.outputs.cache-hit != 'true'
