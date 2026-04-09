@@ -7,7 +7,7 @@ on:
       abi_filter:
         description: 'ABI Filter'
         required: false
-        default: 'arm64-v8a'
+        default: 'armeabi-v7a'
         type: choice
         options:
           - arm64-v8a
@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p jni
           cd jni
-          git clone --depth 1 --recursive https://github.com/deltachat/deltachat-core-rust nexuschat-core-rust
+          git clone --depth 1 --recursive https://github.com/ashlydev99/core
           ls -la nexuschat-core-rust/
 
       - uses: actions/setup-java@v4
