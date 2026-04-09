@@ -46,10 +46,23 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
 
       - uses: android-actions/setup-android@v3
+      
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
           ndk-version: r27
+
+      # 🔧 NUEVO: Instalar Rust (necesario para compilar el core)
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+          override: true
+
+      # 🔧 NUEVO: Instalar cargo-ndk
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk
 
       - uses: Swatinem/rust-cache@v2
         with:
@@ -73,11 +86,20 @@ jobs:
         env:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
+          # 🔧 CORRECCIÓN: Dar permisos de ejecución a los scripts
+          chmod +x scripts/install-toolchains.sh
+          chmod +x scripts/ndk-make.sh
+          
           export PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/"
-          scripts/install-toolchains.sh && scripts/ndk-make.sh arm64-v8a
+          
+          # 🔧 CORRECCIÓN: Ejecutar con bash si el script no tiene shebang
+          bash scripts/install-toolchains.sh
+          bash scripts/ndk-make.sh arm64-v8a
 
       - name: Build APK
-        run: ./gradlew --no-daemon -PABI_FILTER=${{ github.event.inputs.abi_filter || 'arm64-v8a' }} assembleGplayDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon -PABI_FILTER=${{ github.event.inputs.abi_filter || 'arm64-v8a' }} assembleGplayDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
