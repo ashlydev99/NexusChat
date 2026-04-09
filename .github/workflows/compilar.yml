@@ -52,13 +52,20 @@ jobs:
         with:
           ndk-version: r27
 
-      # 🔧 NUEVO: Instalar Rust (necesario para compilar el core)
-     - name: Setup Rust
-  uses: actions-rs/toolchain@v1
-  with:
-    toolchain: stable
-    target: aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
-    override: true
+      # 🔧 CORREGIDO: Setup Rust sin actions-rs (más confiable)
+      - name: Setup Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          source "$HOME/.cargo/env"
+
+      # 🔧 CORREGIDO: Añadir targets de Android uno por uno
+      - name: Add Android targets
+        run: |
+          rustup target add aarch64-linux-android
+          rustup target add armv7-linux-androideabi
+          rustup target add i686-linux-android
+          rustup target add x86_64-linux-android
 
       # 🔧 NUEVO: Instalar cargo-ndk
       - name: Install cargo-ndk
@@ -81,21 +88,24 @@ jobs:
             libs/arm64-v8a
           key: core-arm64-v8a-${{ steps.core-hash.outputs.hash }}-${{ hashFiles('jni/Android.mk', 'jni/Application.mk', 'jni/nc_wrapper.c', 'scripts/ndk-make.sh') }}-ndk-r27
 
+      # 🔧 CORREGIDO: Dar permisos a los scripts antes de ejecutarlos
       - name: Compile core
         if: steps.core-cache.outputs.cache-hit != 'true'
         env:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
-          # 🔧 CORRECCIÓN: Dar permisos de ejecución a los scripts
+          # Dar permisos de ejecución a los scripts
           chmod +x scripts/install-toolchains.sh
           chmod +x scripts/ndk-make.sh
           
+          # Añadir NDK al PATH
           export PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/"
           
-          # 🔧 CORRECCIÓN: Ejecutar con bash si el script no tiene shebang
+          # Ejecutar scripts con bash (por si el shebang falla)
           bash scripts/install-toolchains.sh
           bash scripts/ndk-make.sh arm64-v8a
 
+      # 🔧 CORREGIDO: Dar permisos a gradlew
       - name: Build APK
         run: |
           chmod +x gradlew
