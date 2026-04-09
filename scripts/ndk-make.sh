@@ -30,7 +30,7 @@
 #
 #
 # If you put this in your .bashrc, then you can directly build and
-# deploy DeltaChat from the jni/nexuschat-core-rust directory by
+# deploy NexusChat from the jni/nexuschat-core-rust directory by
 # typing `nmake`:
 #
 # nmake() {(cd ../..; scripts/ndk-make.sh arm64-v8a && ./gradlew installFossDebug; notify-send "install finished")}
@@ -83,7 +83,14 @@ export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER="$TOOLCHAIN/bin/aarch64-linux-a
 export CARGO_TARGET_I686_LINUX_ANDROID_LINKER="$TOOLCHAIN/bin/i686-linux-android21-clang"
 export CARGO_TARGET_X86_64_LINUX_ANDROID_LINKER="$TOOLCHAIN/bin/x86_64-linux-android21-clang"
 
-export RUSTUP_TOOLCHAIN=$(cat "$(dirname "$0")/rust-toolchain")
+# 🔧 CORREGIDO: Usar rust-toolchain.toml si existe, si no, usar stable
+if [ -f "$(dirname "$0")/rust-toolchain.toml" ]; then
+    export RUSTUP_TOOLCHAIN=$(cat "$(dirname "$0")/rust-toolchain.toml" | grep channel | cut -d '"' -f 2)
+elif [ -f "$(dirname "$0")/rust-toolchain" ]; then
+    export RUSTUP_TOOLCHAIN=$(cat "$(dirname "$0")/rust-toolchain")
+else
+    export RUSTUP_TOOLCHAIN="stable"
+fi
 
 if test "$1" = "--debug"; then
   echo Quick debug build that will produce a slower app. DO NOT UPLOAD THE APK ANYWHERE.
@@ -110,27 +117,49 @@ fi
 
 cd jni
 jnidir=$PWD
-rm -f armeabi-v7a/*
-rm -f arm64-v8a/*
-rm -f x86/*
-rm -f x86_64/*
+
+# 🔧 CORREGIDO: Crear directorios si no existen
 mkdir -p armeabi-v7a
 mkdir -p arm64-v8a
 mkdir -p x86
 mkdir -p x86_64
 
-cd nexuschat-core-rust
+# 🔧 CORREGIDO: Limpiar archivos antiguos de forma segura
+rm -f armeabi-v7a/*.a 2>/dev/null
+rm -f arm64-v8a/*.a 2>/dev/null
+rm -f x86/*.a 2>/dev/null
+rm -f x86_64/*.a 2>/dev/null
+
+# 🔧 CORREGIDO: Buscar el directorio del core (puede ser nexuschat-core-rust o deltachat-core-rust)
+if [ -d "nexuschat-core-rust" ]; then
+  cd nexuschat-core-rust
+elif [ -d "deltachat-core-rust" ]; then
+  echo "Found deltachat-core-rust, creating symlink to nexuschat-core-rust"
+  cd ..
+  ln -sf deltachat-core-rust nexuschat-core-rust
+  cd nexuschat-core-rust
+else
+  echo "ERROR: No core directory found in jni/"
+  echo "Expected: nexuschat-core-rust or deltachat-core-rust"
+  ls -la
+  exit 1
+fi
 
 # fix build on MacOS Catalina
 unset CPATH
+
+# 🔧 CORREGIDO: Usar el nombre correcto del paquete (deltachat_ffi)
+# El core original se llama deltachat_ffi, no nexuschat_ffi
+FFI_PACKAGE="deltachat_ffi"
 
 if test -z $1 || test $1 = armeabi-v7a; then
     echo "-- cross compiling to armv7-linux-androideabi (arm) --"
     TARGET_CC="$TOOLCHAIN/bin/armv7a-linux-androideabi21-clang" \
     TARGET_AR="$TOOLCHAIN/bin/llvm-ar" \
     TARGET_RANLIB="$TOOLCHAIN/bin/llvm-ranlib" \
-    cargo build $RELEASEFLAG --target armv7-linux-androideabi -p nexuschat_ffi
-    cp "$CARGO_TARGET_DIR/armv7-linux-androideabi/$RELEASE/libnexuschat.a" "$jnidir/armeabi-v7a"
+    cargo build $RELEASEFLAG --target armv7-linux-androideabi -p $FFI_PACKAGE
+    cp "$CARGO_TARGET_DIR/armv7-linux-androideabi/$RELEASE/libdeltachat.a" "$jnidir/armeabi-v7a/libnexuschat.a" 2>/dev/null || \
+    cp "$CARGO_TARGET_DIR/armv7-linux-androideabi/$RELEASE/libdeltachat.a" "$jnidir/armeabi-v7a/"
 fi
 
 if test -z $1 || test $1 = arm64-v8a; then
@@ -138,8 +167,9 @@ if test -z $1 || test $1 = arm64-v8a; then
     TARGET_CC="$TOOLCHAIN/bin/aarch64-linux-android21-clang" \
     TARGET_AR="$TOOLCHAIN/bin/llvm-ar" \
     TARGET_RANLIB="$TOOLCHAIN/bin/llvm-ranlib" \
-    cargo build $RELEASEFLAG --target aarch64-linux-android -p nexuschat_ffi
-    cp "$CARGO_TARGET_DIR/aarch64-linux-android/$RELEASE/libnexuschat.a" "$jnidir/arm64-v8a"
+    cargo build $RELEASEFLAG --target aarch64-linux-android -p $FFI_PACKAGE
+    cp "$CARGO_TARGET_DIR/aarch64-linux-android/$RELEASE/libdeltachat.a" "$jnidir/arm64-v8a/libnexuschat.a" 2>/dev/null || \
+    cp "$CARGO_TARGET_DIR/aarch64-linux-android/$RELEASE/libdeltachat.a" "$jnidir/arm64-v8a/"
 fi
 
 if test -z $1 || test $1 = x86; then
@@ -147,8 +177,9 @@ if test -z $1 || test $1 = x86; then
     TARGET_CC="$TOOLCHAIN/bin/i686-linux-android21-clang" \
     TARGET_AR="$TOOLCHAIN/bin/llvm-ar" \
     TARGET_RANLIB="$TOOLCHAIN/bin/llvm-ranlib" \
-    cargo build $RELEASEFLAG --target i686-linux-android -p nexuschat_ffi
-    cp "$CARGO_TARGET_DIR/i686-linux-android/$RELEASE/libnexuschat.a" "$jnidir/x86"
+    cargo build $RELEASEFLAG --target i686-linux-android -p $FFI_PACKAGE
+    cp "$CARGO_TARGET_DIR/i686-linux-android/$RELEASE/libdeltachat.a" "$jnidir/x86/libnexuschat.a" 2>/dev/null || \
+    cp "$CARGO_TARGET_DIR/i686-linux-android/$RELEASE/libdeltachat.a" "$jnidir/x86/"
 fi
 
 if test -z $1 || test $1 = x86_64; then
@@ -156,8 +187,9 @@ if test -z $1 || test $1 = x86_64; then
     TARGET_CC="$TOOLCHAIN/bin/x86_64-linux-android21-clang" \
     TARGET_AR="$TOOLCHAIN/bin/llvm-ar" \
     TARGET_RANLIB="$TOOLCHAIN/bin/llvm-ranlib" \
-    cargo build $RELEASEFLAG --target x86_64-linux-android -p nexuschat_ffi
-    cp "$CARGO_TARGET_DIR/x86_64-linux-android/$RELEASE/libnexuschat.a" "$jnidir/x86_64"
+    cargo build $RELEASEFLAG --target x86_64-linux-android -p $FFI_PACKAGE
+    cp "$CARGO_TARGET_DIR/x86_64-linux-android/$RELEASE/libdeltachat.a" "$jnidir/x86_64/libnexuschat.a" 2>/dev/null || \
+    cp "$CARGO_TARGET_DIR/x86_64-linux-android/$RELEASE/libdeltachat.a" "$jnidir/x86_64/"
 fi
 
 echo -- ndk-build --
@@ -174,7 +206,7 @@ fi
 if test $1; then
     echo "NDK_ARCH=$1" >ndkArch
 else
-    rm -f ndkArch # Remove ndkArch, ignore if it doesn't exist
+    rm -f ndkArch 2>/dev/null
 fi
 
 echo "ending time: `date`"
