@@ -28,14 +28,6 @@ jobs:
         with:
           submodules: false
 
-      # Clonar core manualmente
-      - name: Clone core
-        run: |
-          mkdir -p jni
-          cd jni
-          git clone --depth 1 --recursive https://github.com/ashlydev99/core
-          ls -la nexuschat-core-rust/
-
       - uses: actions/setup-java@v4
         with:
           java-version: 17
