@@ -1,0 +1,154 @@
+package com.nexuschat.messenger.components;
+
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import chat.delta.rpc.Rpc;
+import chat.delta.rpc.RpcException;
+import com.b44t.messenger.NcMsg;
+import com.nexuschat.messenger.R;
+import com.nexuschat.messenger.connect.NcHelper;
+import com.nexuschat.messenger.util.DateUtils;
+
+public class ConversationItemFooter extends LinearLayout {
+
+  private TextView dateView;
+  private TextView editedView;
+  private TextView viewsLabel;
+  private ImageView viewsIcon;
+  private ImageView bookmarkIndicatorView;
+  private ImageView emailIndicatorView;
+  private ImageView locationIndicatorView;
+  private DeliveryStatusView deliveryStatusView;
+  private Integer textColor = null;
+  private Context context;
+  private Rpc rpc;
+
+  public ConversationItemFooter(Context context) {
+    super(context);
+    init(context, null);
+  }
+
+  public ConversationItemFooter(Context context, @Nullable AttributeSet attrs) {
+    super(context, attrs);
+    init(context, attrs);
+  }
+
+  public ConversationItemFooter(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init(context, attrs);
+  }
+
+  private void init(Context context, @Nullable AttributeSet attrs) {
+    this.context = context;
+    this.rpc = NcHelper.getRpc(context);
+    inflate(getContext(), R.layout.conversation_item_footer, this);
+
+    dateView = findViewById(R.id.footer_date);
+    editedView = findViewById(R.id.footer_edited);
+    viewsLabel = findViewById(R.id.footer_views);
+    viewsIcon = findViewById(R.id.footer_views_icon);
+    bookmarkIndicatorView = findViewById(R.id.footer_bookmark_indicator);
+    emailIndicatorView = findViewById(R.id.footer_email_indicator);
+    locationIndicatorView = findViewById(R.id.footer_location_indicator);
+    deliveryStatusView = new DeliveryStatusView(findViewById(R.id.delivery_indicator));
+
+    if (attrs != null) {
+      try (TypedArray typedArray =
+          getContext()
+              .getTheme()
+              .obtainStyledAttributes(attrs, R.styleable.ConversationItemFooter, 0, 0)) {
+        setTextColor(
+            typedArray.getInt(
+                R.styleable.ConversationItemFooter_footer_text_color,
+                getResources().getColor(R.color.core_white)));
+      }
+    }
+  }
+
+  public void setMessageRecord(@NonNull NcMsg messageRecord) {
+    presentDate(messageRecord);
+    boolean bookmark = messageRecord.getOriginalMsgId() != 0 || messageRecord.getSavedMsgId() != 0;
+    bookmarkIndicatorView.setVisibility(bookmark ? View.VISIBLE : View.GONE);
+    editedView.setVisibility(messageRecord.isEdited() ? View.VISIBLE : View.GONE);
+
+    int downloadState = messageRecord.getDownloadState();
+    if (messageRecord.isSecure()
+        || downloadState == NcMsg.NC_DOWNLOAD_AVAILABLE
+        || downloadState == NcMsg.NC_DOWNLOAD_FAILURE
+        || downloadState == NcMsg.NC_DOWNLOAD_IN_PROGRESS) {
+      emailIndicatorView.setVisibility(View.GONE);
+    } else {
+      emailIndicatorView.setVisibility(View.VISIBLE);
+    }
+
+    locationIndicatorView.setVisibility(messageRecord.hasLocation() ? View.VISIBLE : View.GONE);
+
+    boolean isOutChannel =
+        NcHelper.getContext(context).getChat(messageRecord.getChatId()).isOutBroadcast();
+
+    if (isOutChannel && messageRecord.isOutgoing()) {
+      try {
+        int accId = rpc.getSelectedAccountId();
+        int count = rpc.getMessageReadReceiptCount(accId, messageRecord.getId());
+        viewsLabel.setText(String.format("%d", count));
+        viewsLabel.setVisibility(View.VISIBLE);
+        viewsIcon.setVisibility(View.VISIBLE);
+      } catch (RpcException e) {
+        e.printStackTrace();
+      }
+    } else {
+      viewsLabel.setVisibility(View.GONE);
+      viewsIcon.setVisibility(View.GONE);
+    }
+
+    presentDeliveryStatus(messageRecord, isOutChannel);
+  }
+
+  private void setTextColor(int color) {
+    textColor = color;
+    dateView.setTextColor(color);
+    editedView.setTextColor(color);
+    viewsLabel.setTextColor(color);
+    viewsIcon.setColorFilter(color);
+    bookmarkIndicatorView.setColorFilter(color);
+    emailIndicatorView.setColorFilter(color);
+    locationIndicatorView.setColorFilter(color);
+    deliveryStatusView.setTint(color);
+  }
+
+  private void presentDate(@NonNull NcMsg ncMsg) {
+    dateView.forceLayout();
+    dateView.setText(
+        DateUtils.getExtendedRelativeTimeSpanString(getContext(), ncMsg.getTimestamp()));
+  }
+
+  private void presentDeliveryStatus(@NonNull NcMsg messageRecord, boolean isOutChannel) {
+    // isDownloading is temporary and should be checked first.
+    boolean isDownloading = messageRecord.getDownloadState() == NcMsg.NC_DOWNLOAD_IN_PROGRESS;
+
+    if (isDownloading) deliveryStatusView.setDownloading();
+    else if (messageRecord.isPending()) deliveryStatusView.setPending();
+    else if (messageRecord.isFailed()) deliveryStatusView.setFailed();
+    else if (!messageRecord.isOutgoing() || isOutChannel) deliveryStatusView.setNone();
+    else if (messageRecord.isRemoteRead()) deliveryStatusView.setRead();
+    else if (messageRecord.isDelivered()) deliveryStatusView.setSent();
+    else if (messageRecord.isPreparing()) deliveryStatusView.setPreparing();
+    else deliveryStatusView.setPending();
+  }
+
+  public String getDescription() {
+    String desc = dateView.getText().toString();
+    String deliveryDesc = deliveryStatusView.getDescription();
+    if (!"".equals(deliveryDesc)) {
+      desc += "\n" + deliveryDesc;
+    }
+    return desc;
+  }
+}
