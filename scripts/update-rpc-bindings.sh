@@ -3,7 +3,7 @@
 
 # generate schema.json
 ROOT_DIR=$PWD
-cd ./jni/deltachat-core-rust/deltachat-rpc-server
+cd ./jni/nexuschat-core-rust/deltachat-rpc-server
 cargo run -- --openrpc > "$ROOT_DIR/schema.json"
 cd "$ROOT_DIR"
 

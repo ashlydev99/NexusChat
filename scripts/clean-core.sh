@@ -1,4 +1,4 @@
-cd jni/deltachat-core-rust
+cd jni/nexuschat-core-rust
 cargo clean
 cd -
 
@@ -8,7 +8,7 @@ rm -rf build/outputs
 rm -rf build/tmp
 rm     build/gmpAppId.txt
 rm -rf obj/local
-rm -rf jni/deltachat-core-rust/target
+rm -rf jni/nexuschat-core-rust/target
 rm jni/armeabi-v7a/libdeltachat.a
 rm jni/x86/libdeltachat.a
 rm jni/arm64-v8a/libdeltachat.a
