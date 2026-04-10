@@ -41,13 +41,20 @@ jobs:
         with:
           ndk-version: r27
 
+      # 🔧 NUEVO: Clonar el core manualmente
+      - name: Clone deltachat-core-rust
+        run: |
+          rm -rf jni/deltachat-core-rust
+          git clone --depth 1 --recursive https://github.com/deltachat/deltachat-core-rust jni/deltachat-core-rust
+          ls -la jni/deltachat-core-rust/
+
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: jni/deltachat-core-rust
 
       - name: Get deltachat-core-rust submodule hash
         id: core-hash
-        run: echo "hash=$(git rev-parse HEAD:jni/deltachat-core-rust)" >> $GITHUB_OUTPUT
+        run: echo "hash=$(git -C jni/deltachat-core-rust rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Restore compiled core
         id: core-cache
@@ -63,13 +70,11 @@ jobs:
         env:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
-          # 🔧 CORREGIDO: Dar permisos de ejecución a los scripts
           chmod +x scripts/install-toolchains.sh
           chmod +x scripts/ndk-make.sh
           
           export PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/"
           
-          # 🔧 CORREGIDO: Ejecutar scripts
           ./scripts/install-toolchains.sh
           ./scripts/ndk-make.sh arm64-v8a
 
