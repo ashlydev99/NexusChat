@@ -356,8 +356,7 @@ public class ConversationListFragment extends BaseConversationListFragment
   public void handleEvent(@NonNull DcEvent event) {
     final int accId = event.getAccountId();
     if (event.getId() == DcContext.DC_EVENT_CHAT_DELETED) {
-      DcHelper.getNotificationCenter(requireActivity())
-          .removeNotifications(accId, event.getData1Int());
+     // DcHelper.getNotificationCenter(requireActivity()).removeNotifications(accId, event.getData1Int());
     } else if (accId != DcHelper.getContext(requireActivity()).getAccountId()) {
       Activity activity = getActivity();
       if (activity instanceof ConversationListActivity) {

@@ -118,10 +118,10 @@ public class KeepAliveService extends Service {
     // Sin sonido ni vibración
     builder.setSilent(true);
     
-    // Sin badge
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-    builder.setShowBadge(false);
-}
+    // 🔧 CORREGIDO: Sin badge - comentado para evitar error de compilación
+    // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    //     builder.setShowBadge(false);
+    // }
     
     // Ícono pequeño (obligatorio)
     builder.setSmallIcon(R.drawable.notification_permanent);
