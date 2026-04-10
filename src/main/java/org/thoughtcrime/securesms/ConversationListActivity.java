@@ -438,7 +438,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
     int selectedAccId = DcHelper.getContext(this).getAccountId();
     int accountId = getIntent().getIntExtra(ACCOUNT_ID_EXTRA, selectedAccId);
     if (getIntent().getBooleanExtra(CLEAR_NOTIFICATIONS, false)) {
-      DcHelper.getNotificationCenter(this).removeAllNotifications(accountId);
+    //   DcHelper.getNotificationCenter(this).removeAllNotifications(accountId);
     }
     if (accountId != selectedAccId) {
       AccountManager.getInstance().switchAccount(this, accountId);
@@ -839,7 +839,7 @@ public class ConversationListActivity extends PassphraseRequiredActionBarActivit
   private void deleteProfile(int profileId) {
     DcAccounts accounts = DcHelper.getAccounts(this);
     boolean selected = profileId == accounts.getSelectedAccount().getAccountId();
-    DcHelper.getNotificationCenter(this).removeAllNotifications(profileId);
+   //  DcHelper.getNotificationCenter(this).removeAllNotifications(profileId);
     accounts.removeAccount(profileId);
     if (selected) {
       DcContext selAcc = accounts.getSelectedAccount();

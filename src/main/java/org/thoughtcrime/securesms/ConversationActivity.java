@@ -488,7 +488,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
 
     try {
       int accId = rpc.getSelectedAccountId();
-      DcHelper.getNotificationCenter(this).updateVisibleChat(accId, chatId);
+      // DcHelper.getNotificationCenter(this).updateVisibleChat(accId, chatId);
     } catch (RpcException e) {
       Log.e(TAG, "rpc.getSelectedAccountId() failed", e);
     }
@@ -506,7 +506,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
 
     processComposeControls(ACTION_SAVE_DRAFT);
 
-    DcHelper.getNotificationCenter(this).clearVisibleChat();
+   //  DcHelper.getNotificationCenter(this).clearVisibleChat();
     if (isFinishing()) overridePendingTransition(R.anim.fade_scale_in, R.anim.slide_to_right);
     inputPanel.onPause();
   }
@@ -1733,7 +1733,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
                   @Override
                   public void onSuccess(Integer chatId) {
                     DcHelper.getNotificationCenter(ConversationActivity.this)
-                        .maybePlaySendSound(dcChat);
+                       // .maybePlaySendSound(dcChat);
                   }
                 });
       }

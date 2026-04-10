@@ -582,7 +582,7 @@ public class CallActivity extends AppCompatActivity {
         break;
 
       case ANSWERED_ELSEWHERE:
-        statusText.setText(R.string.call_answered_elsewhere);
+      //  statusText.setText(R.string.call_answered_elsewhere);
         incomingCallPrompt.setVisibility(View.GONE);
         bottomLayoutContainer.setVisibility(View.GONE);
         callerIconContainer.setVisibility(View.GONE);

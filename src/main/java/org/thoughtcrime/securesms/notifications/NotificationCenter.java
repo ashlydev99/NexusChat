@@ -460,7 +460,7 @@ public class NotificationCenter {
           DcMsg quotedMsg = dcMsg.getQuotedMsg();
           boolean isMention = dcChat.isMultiUser() && quotedMsg != null && quotedMsg.isOutgoing();
 
-          maybeAddNotification(accountId, dcChat, msgId, shortLine, tickerLine, true, isMention);
+          //maybeAddNotification(accountId, dcChat, msgId, shortLine, tickerLine, true, isMention);
         });
   }
 
@@ -484,8 +484,8 @@ public class NotificationCenter {
                   reaction,
                   dcMsg.getSummarytext(2000));
           DcChat dcChat = dcContext.getChat(dcMsg.getChatId());
-          maybeAddNotification(
-              accountId, dcChat, msgId, shortLine, shortLine, false, dcChat.isMultiUser());
+          //maybeAddNotification(
+              //accountId, dcChat, msgId, shortLine, shortLine, false, dcChat.isMultiUser());
         });
   }
 

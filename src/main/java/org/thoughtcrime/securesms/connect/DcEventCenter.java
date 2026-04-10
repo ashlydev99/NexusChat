@@ -206,16 +206,16 @@ public class DcEventCenter {
 
       case DcContext.DC_EVENT_INCOMING_WEBXDC_NOTIFY:
         DcHelper.getNotificationCenter(context)
-            .notifyWebxdc(accountId, event.getData1Int(), event.getData2Int(), event.getData2Str());
+            //.notifyWebxdc(accountId, event.getData1Int(), event.getData2Int(), event.getData2Str());
         break;
 
       case DcContext.DC_EVENT_MSGS_NOTICED:
-        DcHelper.getNotificationCenter(context).removeNotifications(accountId, event.getData1Int());
+        //DcHelper.getNotificationCenter(context).removeNotifications(accountId, event.getData1Int());
         break;
 
       case DcContext.DC_EVENT_MSG_DELETED:
-        DcHelper.getNotificationCenter(context)
-            .removeNotification(accountId, event.getData1Int(), event.getData2Int());
+        //DcHelper.getNotificationCenter(context)
+            //.removeNotification(accountId, event.getData1Int(), event.getData2Int());
         break;
 
       case DcContext.DC_EVENT_ACCOUNTS_BACKGROUND_FETCH_DONE:

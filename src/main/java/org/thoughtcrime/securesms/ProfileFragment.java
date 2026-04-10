@@ -202,9 +202,9 @@ public class ProfileFragment extends Fragment
       case ProfileAdapter.ITEM_INTRODUCED_BY:
         onVerifiedByClicked();
         break;
-      case ProfileAdapter.ITEM_EDIT_PROFILE_BUTTON:
-        onEditProfile();
-        break;
+      // case ProfileAdapter.ITEM_EDIT_PROFILE_BUTTON:
+        // onEditProfile();
+       // break;
     }
   }
 

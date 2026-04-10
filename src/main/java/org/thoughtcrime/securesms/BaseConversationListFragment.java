@@ -333,7 +333,7 @@ public abstract class BaseConversationListFragment extends Fragment implements A
                 int accountId = dcContext.getAccountId();
                 for (long chatId : selectedChats) {
                   DcHelper.getNotificationCenter(requireContext())
-                      .removeNotifications(accountId, (int) chatId);
+                  //    .removeNotifications(accountId, (int) chatId);
                   if (dcContext.getChat((int) chatId).shallLeaveBeforeDelete(dcContext)) {
                     dcContext.removeContactFromChat((int) chatId, DcContact.DC_CONTACT_ID_SELF);
                   }

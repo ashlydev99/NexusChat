@@ -35,7 +35,7 @@ public class MarkReadReceiver extends BroadcastReceiver {
 
     Util.runOnAnyBackgroundThread(
         () -> {
-          DcHelper.getNotificationCenter(context).removeNotifications(accountId, chatId);
+          // DcHelper.getNotificationCenter(context).removeNotifications(accountId, chatId);
           if (markNoticed) {
             DcContext dcContext = DcHelper.getAccounts(context).getAccount(accountId);
             dcContext.marknoticedChat(chatId);
