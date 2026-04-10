@@ -76,7 +76,6 @@
         <item name="android:textColor">#BFffffff</item>
     </style>
 
-
     <!-- For Holo Light Dialog Activity Styling Emulation -->
 
     <style
@@ -172,29 +171,7 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <!-- Estilos de texto con fuente personalizable -->
-    <style name="Signal.Text.Body" parent="">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:lineSpacingExtra">2dp</item>
-    </style>
-
-    <style name="Signal.Text.Preview" parent="">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="Signal.Text.Caption" parent="">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?android:attr/textColorTertiary</item>
-    </style>
-
-    <style name="Signal.Text.Title" parent="">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
-
+    <!-- NOTA: Los estilos Signal.Text.Body, Signal.Text.Preview, Signal.Text.Caption 
+         y Signal.Text.Title ya existen en text_styles.xml. 
+         No los dupliques aquí. -->
 </resources>
