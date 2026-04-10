@@ -27,6 +27,8 @@
     <color name="gray70">#ff4b5563</color>
     <color name="gray78">#ff374151</color>
     <color name="gray95">#ff111827</color>
+    <color name="nexus_primary">#3b82f6</color>
+    <color name="nexus_accent">#3b82f6</color>
 
     <!-- Colores de burbujas Signal -->
     <color name="light_green">#e3f2fd</color>

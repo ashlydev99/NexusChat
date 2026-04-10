@@ -1010,4 +1010,7 @@
 
     <!-- device messages for updates -->
     <string name="update_2_0">¿Qué hay de nuevo?\n\n💯 El cifrado de extremo a extremo es fiable y para siempre. ¡Se acabaron los candados 🔒!\n\n✉️ El correo electrónico clásico sin cifrado de extremo a extremo es marcado con un símbolo de carta.\n\n😻 Nueva pantalla de perfil mejorada para todos tus contactos.\n\n🔲 Nuevo botón para acceder rápidamente a las apps usadas en el chat.\n\n🔐 Ahora está disponible el bloqueo de chats.\n\n🔤 Hemos implementado una opción para modificar la fuente del texto.\n\n🗨️ han llegado a nuestros chats las burbujas estilo iOS para una mejor apariencia.\n\n👌🏻 Se han realizado arreglos y correcciones para un diseño mejor y una estabilidad general de la aplicación.</string>
+    <string name="donate">Donar</string>
+<string name="donate_device_msg">Apoya Nexus Chat</string>
+<string name="delta_chat_homepage">Página de inicio</string>
 </resources>
