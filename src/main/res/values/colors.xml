@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- Colores principales estilo Signal -->
+    <color name="delta_primary">#3b82f6</color>
+    <color name="delta_primary_lite">#60a5fa</color>
+    <color name="delta_accent">#3b82f6</color>
+    <color name="delta_accent_darker">#2563eb</color>
+
+    <color name="primary_alpha_focus">#883b82f6</color>
+    <color name="primary_alpha33">#553b82f6</color>
+
+    <!-- Colores de estado -->
+    <color name="unread_count">#3b82f6</color>
+    <color name="unread_count_muted">#9ca3af</color>
+    <color name="unread_count_muted_dark">#4b5563</color>
+
+    <!-- Blancos y negros -->
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="gray5">#fff9fafb</color>
+    <color name="gray10">#fff3f4f6</color>
+    <color name="gray12">#ffe5e7eb</color>
+    <color name="gray13">#ffd1d5db</color>
+    <color name="gray20">#ffe5e7eb</color>
+    <color name="gray50">#ff9ca3af</color>
+    <color name="gray65">#ff6b7280</color>
+    <color name="gray70">#ff4b5563</color>
+    <color name="gray78">#ff374151</color>
+    <color name="gray95">#ff111827</color>
+
+    <!-- Colores de burbujas Signal -->
+    <color name="light_green">#e3f2fd</color>
+    <color name="green">#3b82f6</color>
+    <color name="light_pink">#fce4ec</color>
+
+    <color name="transparent_black_30">#30000000</color>
+    <color name="conversation_compose_divider">#1f000000</color>
+    <color name="action_mode_status_bar">#6b7280</color>
+    <color name="touch_highlight">#1f000000</color>
+    <color name="touch_highlight_strong">#4c3b82f6</color>
+
+    <color name="sticker_selected_color">#993b82f6</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="transparent_black">#00000000</color>
+    <color name="MediaOverview_Media_selected_overlay">#883b82f6</color>
+    <color name="dummy_avatar_color">#cbd5e1</color>
+
+    <!-- Estados de conexión -->
+    <color name="status_dot_online">#10b981</color>
+    <color name="status_dot_connecting">#f59e0b</color>
+    <color name="status_dot_offline">#ef4444</color>
+    <color name="slidearrow_color">#9ca3af</color>
+
+    <color name="universal_overlay">#804b5563</color>
+
+    <color name="provider_prep_bg">#fef3c7</color>
+    <color name="provider_prep_fg">#78350f</color>
+    <color name="provider_broken_bg">#fee2e2</color>
+    <color name="provider_broken_fg">#991b1b</color>
+
+    <color name="pinned_bg">#f3f4f6</color>
+    <color name="pinned_bg_dark">#1f2937</color>
+
+    <color name="unknown_sender">#9ca3af</color>
+
+    <!-- Reacciones estilo Signal -->
+    <color name="reaction_pill_background">#ffffff</color>
+    <color name="reaction_pill_border">#e5e7eb</color>
+    <color name="reaction_pill_text_color">#4b5563</color>
+    <color name="reaction_pill_background_selected">#e3f2fd</color>
+    <color name="reaction_pill_border_selected">#3b82f6</color>
+    <color name="reaction_pill_text_color_selected">#3b82f6</color>
+
+    <color name="delete_account_item_bg">#f3f4f6</color>
+
+    <!-- Llamadas estilo Signal -->
+    <color name="calls_dark_background">#0f172a</color>
+    <color name="calls_dark_surface">#1e293b</color>
+    <color name="calls_dark_surface_1">#334155</color>
+    <color name="calls_dark_surface_2">#475569</color>
+    <color name="calls_dark_surface_3">#64748b</color>
+    <color name="calls_dark_on_surface">#f1f5f9</color>
+    <color name="calls_dark_on_surface_variant">#cbd5e1</color>
+    <color name="calls_primary">#3b82f6</color>
+    <color name="calls_red">#ef4444</color>
+    <color name="calls_green">#10b981</color>
+</resources>

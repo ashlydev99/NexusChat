@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- Modo oscuro estilo Signal -->
+    <color name="reaction_pill_background">#1f2937</color>
+    <color name="reaction_pill_border">#374151</color>
+    <color name="reaction_pill_text_color">#9ca3af</color>
+    <color name="reaction_pill_background_selected">#1e3a8a</color>
+    <color name="reaction_pill_border_selected">#3b82f6</color>
+    <color name="reaction_pill_text_color_selected">#60a5fa</color>
+
+    <color name="action_mode_status_bar">#1f2937</color>
+    <color name="dummy_avatar_color">#4b5563</color>
+
+    <color name="delete_account_item_bg">#374151</color>
+
+    <!-- Ajustes de fondo oscuro -->
+    <color name="gray5">#111827</color>
+    <color name="gray10">#1f2937</color>
+    <color name="gray12">#374151</color>
+    <color name="gray13">#4b5563</color>
+    <color name="gray20">#374151</color>
+    <color name="gray50">#6b7280</color>
+</resources>

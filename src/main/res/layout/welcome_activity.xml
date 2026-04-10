@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity">
+
+    <include layout="@layout/status_bar_background" />
+
+    <LinearLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <androidx.legacy.widget.Space
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <!-- CAMBIO #7: Logo/Icono de la app -->
+        <ImageView
+            android:id="@+id/welcome_icon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:src="@drawable/ic_nexus_logo"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            tools:ignore="contentDescription" />
+
+        <!-- CAMBIO #7: Título "NexusChat" -->
+        <TextView
+            android:id="@+id/welcome_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
+            android:text="NexusChat"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorPrimary" />
+
+        <!-- CAMBIO #7: Subtítulo "Chatea de forma segura" -->
+        <TextView
+            android:id="@+id/welcome_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/welcome_chat_over_email"
+            android:textSize="16sp"
+            android:textColor="?android:attr/textColorSecondary" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal">
+
+            <!-- CAMBIO #7: Botón "Crear Cuenta" estilo WhatsApp -->
+            <Button
+                style="@style/ButtonPrimary"
+                android:id="@+id/signup_button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/onboarding_create_instant_account"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:background="@drawable/button_primary_rounded" />
+
+            <!-- CAMBIO #7: Botón "Ya tengo una cuenta" estilo WhatsApp -->
+            <Button
+                style="@style/ButtonSecondary"
+                android:id="@+id/signin_button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/onboarding_alternative_logins"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:background="@drawable/button_secondary_rounded" />
+
+        </LinearLayout>
+
+        <androidx.legacy.widget.Space
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

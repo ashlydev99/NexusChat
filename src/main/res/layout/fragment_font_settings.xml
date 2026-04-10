@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fuente de la aplicación"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona la fuente que prefieras para toda la aplicación"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginBottom="24dp" />
+
+        <RadioGroup
+            android:id="@+id/font_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/font_default"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Predeterminada del sistema"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/font_sans"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Sans Serif (Roboto)"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/font_serif"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Serif"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/font_mono"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Monospace"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/font_roboto"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Roboto"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vista previa"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/preview_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Este es un ejemplo de cómo se verán los mensajes en Nexus Chat. La fuente se aplicará en toda la aplicación."
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>
