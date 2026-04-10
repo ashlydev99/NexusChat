@@ -35,6 +35,7 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
 
       - uses: android-actions/setup-android@v3
+      
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
@@ -62,11 +63,20 @@ jobs:
         env:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
+          # 🔧 CORREGIDO: Dar permisos de ejecución a los scripts
+          chmod +x scripts/install-toolchains.sh
+          chmod +x scripts/ndk-make.sh
+          
           export PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/"
-          scripts/install-toolchains.sh && scripts/ndk-make.sh arm64-v8a
+          
+          # 🔧 CORREGIDO: Ejecutar scripts
+          ./scripts/install-toolchains.sh
+          ./scripts/ndk-make.sh arm64-v8a
 
       - name: Build APK
-        run: ./gradlew --no-daemon -PABI_FILTER=arm64-v8a assembleGplayDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon -PABI_FILTER=arm64-v8a assembleGplayDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
