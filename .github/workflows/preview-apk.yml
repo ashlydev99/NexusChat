@@ -41,7 +41,6 @@ jobs:
         with:
           ndk-version: r27
 
-      # 🔧 NUEVO: Clonar el core manualmente
       - name: Clone deltachat-core-rust
         run: |
           rm -rf jni/deltachat-core-rust
@@ -79,9 +78,9 @@ jobs:
           ./scripts/ndk-make.sh arm64-v8a
 
       - name: Build APK
-  run: |
-    chmod +x gradlew
-    ./gradlew --no-daemon -PABI_FILTER=**armeabi-v7a** assembleGplayDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon -PABI_FILTER=armeabi-v7a assembleGplayDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
