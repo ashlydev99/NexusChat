@@ -422,7 +422,7 @@
         <item quantity="other">%d nuevos mensajes</item>
     </plurals>
     <string name="chat_new_one_to_one_hint">Envíe un mensaje a %1$s.</string>
-    <string name="chat_new_channel_hint">Canales son una herramienta para comunicación de uno a muchos para crear un transmisión de mensajes.</string>
+    <string name="chat_new_channel_hint">Canales son una herramienta para comunicación de uno a muchos para crear una transmisión de mensajes.</string>
     <string name="chat_new_group_hint">Los demás sólo verán este grupo después de que hayas enviado un primer mensaje.</string>
     <string name="chat_record_slide_to_cancel">Deslice para cancelar</string>
     <string name="chat_record_explain">Mantenga pulsado para grabar un mensaje de voz, suelte para enviar</string>
@@ -538,7 +538,7 @@
     <!-- CAMBIO #7: Onboarding rediseñado -->
     <string name="onboarding_create_instant_account">Crear Cuenta</string>
     <string name="onboarding_alternative_logins">Ya tengo una cuenta</string>
-    <string name="manual_account_setup_option">Usar correo-e clásico como Retransmisor</string>
+    <string name="manual_account_setup_option">Usar su correo electrónico</string>
     <string name="instant_onboarding_title">Crear Cuenta</string>
     <string name="instant_onboarding_agree_default2">Política de privacidad para %1$s</string>
     <string name="instant_onboarding_agree_instance">Acerca de los perfiles en %1$s</string>
@@ -551,7 +551,7 @@
     <string name="instant_onboarding_confirm_group">¿Desea crear un nuevo perfil y unirse al grupo \"%1$s\"?</string>
 
     <!-- CAMBIO #7: Pantalla de bienvenida -->
-    <string name="welcome_chat_over_email">Chatea de forma segura</string>
+    <string name="welcome_chat_over_email">Chatea de forma segura con tus familiares y amigos.</string>
     <string name="scan_invitation_code">Escanear código de invitación</string>
     <string name="login_title">Iniciar sesión</string>
     <string name="login_advanced_hint">Este inicio de sesión es para usuarios avanzados:\n\n• No utilice una cuenta que esté usando en otra app.\n\n• El servidor de correo electrónico clásico permite chats sin cifrado de extremo a extremo, los cuales están marcados por un icono de correo.</string>
@@ -1009,5 +1009,5 @@
     <string name="perm_enable_bg_already_done">Ya has permitido que Nexus Chat reciba mensajes en segundo plano.\n\nSi los mensajes aún no llegan en segundo plano, compruebe también la configuración de su sistema.</string>
 
     <!-- device messages for updates -->
-    <string name="update_2_0">¿Qué hay de nuevo?\n\n💯 El cifrado de extremo a extremo es fiable y para siempre. ¡Se acabaron los candados 🔒!\n\n✉️ El correo electrónico clásico sin cifrado de extremo a extremo es marcado con un símbolo de carta.\n\n😻 Nueva pantalla de perfil mejorada para todos tus contactos.\n\n🔲 Nuevo botón para acceder rápidamente a las apps usadas en el chat.\n\n❤️ Dona para ayudarnos a mantener nuestra independencia y seguir mejorando: %1$s</string>
+    <string name="update_2_0">¿Qué hay de nuevo?\n\n💯 El cifrado de extremo a extremo es fiable y para siempre. ¡Se acabaron los candados 🔒!\n\n✉️ El correo electrónico clásico sin cifrado de extremo a extremo es marcado con un símbolo de carta.\n\n😻 Nueva pantalla de perfil mejorada para todos tus contactos.\n\n🔲 Nuevo botón para acceder rápidamente a las apps usadas en el chat.\n\n🔐 Ahora está disponible el bloqueo de chats.\n\n🔤 Hemos implementado una opción para modificar la fuente del texto.\n\n🗨️ han llegado a nuestros chats las burbujas estilo iOS para una mejor apariencia.\n\n👌🏻 Se han realizado arreglos y correcciones para un diseño mejor y una estabilidad general de la aplicación.</string>
 </resources>
