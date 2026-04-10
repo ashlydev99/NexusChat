@@ -1732,8 +1732,7 @@ public class ConversationActivity extends PassphraseRequiredActionBarActivity
                 new AssertedSuccessListener<Integer>() {
                   @Override
                   public void onSuccess(Integer chatId) {
-                    DcHelper.getNotificationCenter(ConversationActivity.this)
-                       // .maybePlaySendSound(dcChat);
+                 //  DcHelper.getNotificationCenter(ConversationActivity.this).maybePlaySendSound(dcChat);
                   }
                 });
       }

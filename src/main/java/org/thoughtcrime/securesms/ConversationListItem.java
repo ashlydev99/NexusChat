@@ -140,7 +140,7 @@ public class ConversationListItem extends RelativeLayout
     if (highlightSubstring != null) {
       this.fromView.setText(getHighlightedSpan(displayName, highlightSubstring));
     } else {
-      this.fromView.setText(displayName;
+      this.fromView.setText(displayName);
     }
 
     subjectView.setVisibility(chatId == DcChat.DC_CHAT_ID_ARCHIVED_LINK ? GONE : VISIBLE);

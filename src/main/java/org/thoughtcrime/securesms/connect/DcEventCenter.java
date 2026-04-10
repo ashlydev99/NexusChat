@@ -205,8 +205,7 @@ public class DcEventCenter {
         break;
 
       case DcContext.DC_EVENT_INCOMING_WEBXDC_NOTIFY:
-        DcHelper.getNotificationCenter(context)
-            //.notifyWebxdc(accountId, event.getData1Int(), event.getData2Int(), event.getData2Str());
+     //   DcHelper.getNotificationCenter(context).notifyWebxdc(accountId, event.getData1Int(), event.getData2Int(), event.getData2Str());
         break;
 
       case DcContext.DC_EVENT_MSGS_NOTICED:

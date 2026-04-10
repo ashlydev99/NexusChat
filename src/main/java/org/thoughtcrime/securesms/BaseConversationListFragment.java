@@ -332,8 +332,7 @@ public abstract class BaseConversationListFragment extends Fragment implements A
               protected Void doInBackground(Void... params) {
                 int accountId = dcContext.getAccountId();
                 for (long chatId : selectedChats) {
-                  DcHelper.getNotificationCenter(requireContext())
-                  //    .removeNotifications(accountId, (int) chatId);
+                // DcHelper.getNotificationCenter(requireContext()).removeNotifications(accountId, (int) chatId);
                   if (dcContext.getChat((int) chatId).shallLeaveBeforeDelete(dcContext)) {
                     dcContext.removeContactFromChat((int) chatId, DcContact.DC_CONTACT_ID_SELF);
                   }
