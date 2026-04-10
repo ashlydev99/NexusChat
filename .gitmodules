@@ -1,3 +1,0 @@
-[submodule "jni/nexuschat-core-rust"]
-    path = jni/nexuschat-core-rust
-    url = https://github.com/deltachat/deltachat-core-rust
